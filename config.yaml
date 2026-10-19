@@ -1,0 +1,253 @@
+# GraphGuard Configuration
+# Central configuration for all pipeline components.
+# Paths are relative to the project root unless otherwise noted.
+
+project:
+  name: "GraphGuard"
+  version: "1.0.0"
+  description: "Explainable Graph Neural Network for Intelligent Intrusion Detection"
+  seed: 42
+
+paths:
+  project_root: "/Users/paramesh/Desktop/graph guard"
+  data:
+    raw: "data/raw"
+    processed: "data/processed"
+    samples: "data/samples"
+  datasets:
+    generated_labelled_flows_zip: "GeneratedLabelledFlows.zip"
+    machine_learning_csv_zip: "MachineLearningCSV.zip"
+    generated_labelled_flows_dir: "TrafficLabelling"
+    machine_learning_csv_dir: "MachineLearningCVE"
+  models: "models"
+  results:
+    metrics: "results/metrics"
+    figures: "results/figures"
+    predictions: "results/predictions"
+    explanations: "results/explanations"
+    graphs: "results/graphs"
+  dashboard: "dashboard"
+
+# CICIDS2017 source files inside GeneratedLabelledFlows.zip
+dataset_files:
+  - "Monday-WorkingHours.pcap_ISCX.csv"
+  - "Tuesday-WorkingHours.pcap_ISCX.csv"
+  - "Wednesday-workingHours.pcap_ISCX.csv"
+  - "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv"
+  - "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv"
+  - "Friday-WorkingHours-Morning.pcap_ISCX.csv"
+  - "Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv"
+  - "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv"
+
+# Sample file for fast development/testing (use only this file in --sample mode)
+sample_file: "Tuesday-WorkingHours.pcap_ISCX.csv"
+sample_max_rows: null  # process all Tuesday rows for full morning and afternoon campaign windows
+
+preprocessing:
+  chunk_size: 50000           # rows per chunk for memory-safe CSV reading
+  encoding: "utf-8"
+  encoding_errors: "replace"  # handle malformed bytes gracefully
+
+  # Metadata columns to preserve (not used as ML features)
+  metadata_columns:
+    - "Flow ID"
+    - "Source IP"
+    - "Source Port"
+    - "Destination IP"
+    - "Destination Port"
+    - "Protocol"
+    - "Timestamp"
+    - "Label"
+
+  # Label column name (after normalization)
+  label_column: "Label"
+  timestamp_column: "Timestamp"
+
+  # Timestamp format in GeneratedLabelledFlows
+  timestamp_format: "%m/%d/%Y %H:%M"
+
+  # Binary label mapping (BENIGN=0, all attacks=1)
+  binary_label:
+    BENIGN: 0
+
+  # All known attack labels (to be verified from data; others auto-detected)
+  known_attack_labels:
+    - "FTP-Patator"
+    - "SSH-Patator"
+    - "DoS Hulk"
+    - "DoS GoldenEye"
+    - "DoS slowloris"
+    - "DoS Slowhttptest"
+    - "Heartbleed"
+    - "Web Attack – Brute Force"
+    - "Web Attack – XSS"
+    - "Web Attack – Sql Injection"
+    - "Infiltration"
+    - "Bot"
+    - "DDoS"
+    - "PortScan"
+
+  # Columns containing values that should be dropped if infinite
+  drop_inf: true
+  # Fill remaining NaN with 0 after dropping inf
+  fill_nan: 0.0
+
+  # Train/val/test split ratios (time-aware: sort by timestamp first)
+  split:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+    time_aware: true  # split by time order, not random
+
+  # Feature scaling
+  scaler: "standard"   # options: standard, minmax, robust
+
+graph:
+  # Node features: aggregated statistics per IP node
+  node_feature_columns:
+    - "connection_count"
+    - "unique_destinations"
+    - "unique_sources"
+    - "out_flow_bytes_mean"
+    - "in_flow_bytes_mean"
+    - "out_packet_count_mean"
+    - "in_packet_count_mean"
+    - "out_flow_duration_mean"
+    - "in_flow_duration_mean"
+    - "out_degree"
+    - "in_degree"
+    - "unique_neighbors"
+
+  # Minimum flows to keep an edge (prune very sparse connections)
+  min_edge_flows: 1
+
+agc:
+  # Temporal window size in minutes
+  window_minutes: 5
+  # Staleness threshold: edges inactive beyond this many windows are pruned
+  stale_threshold_windows: 3
+  # Edge weight decay factor for inactive edges
+  weight_decay: 0.5
+  # Minimum edge weight before pruning
+  min_edge_weight: 0.01
+
+model:
+  graphsage:
+    # Node embedding dimensions
+    hidden_dim: 128
+    embedding_dim: 64
+    num_layers: 2
+    aggregator: "mean"         # mean | max | lstm
+    dropout: 0.3
+    normalize: true
+
+  edge_classifier:
+    # Concatenated input: src_embed + dst_embed + edge_features
+    hidden_dims: [256, 128]
+    dropout: 0.3
+    activation: "relu"
+
+  training:
+    epochs: 100
+    learning_rate: 0.001
+    weight_decay: 0.0005
+    batch_size: 4096           # edge-level mini-batching
+    patience: 15               # early stopping patience
+    min_delta: 0.0001          # minimum improvement for early stopping
+    checkpoint_metric: "val_f1_macro"  # metric to monitor for checkpointing
+    # Class imbalance: options: weighted_loss | oversample | none
+    imbalance_strategy: "weighted_loss"
+    use_mps: true              # Apple Silicon GPU (MPS backend)
+
+baselines:
+  random_forest:
+    n_estimators: 200
+    max_depth: null            # null = unlimited
+    n_jobs: -1
+    class_weight: "balanced"
+    random_state: 42
+
+  xgboost:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    n_jobs: -1
+    use_label_encoder: false
+    eval_metric: "mlogloss"
+    random_state: 42
+
+evaluation:
+  average_methods: ["macro", "weighted", "binary"]
+  # Save confusion matrix as PNG
+  confusion_matrix_figsize: [14, 12]
+  # Classification report decimal places
+  decimal_places: 4
+
+explainability:
+  method: "shap"              # shap | lime | integrated_gradients
+  # Number of background samples for SHAP
+  shap_background_samples: 100
+  # Top-k features to display per explanation
+  top_k_features: 15
+  # Number of suspicious flows to explain automatically
+  auto_explain_top_n: 20
+
+threat:
+  tps:
+    # Weights for TPS components (must sum to 1.0)
+    weights:
+      attack_probability: 0.35
+      suspicious_neighbor_ratio: 0.25
+      recent_attack_frequency: 0.20
+      degree_centrality: 0.10
+      graph_betweenness: 0.10
+
+    # Time window for "recent" attack frequency (minutes)
+    recent_window_minutes: 30
+
+    # TPS thresholds for threat levels
+    thresholds:
+      critical: 0.75
+      high: 0.50
+      medium: 0.25
+      low: 0.0
+
+logging:
+  level: "INFO"             # DEBUG | INFO | WARNING | ERROR
+  format: "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+  log_to_file: true
+  log_dir: "results/logs"
+
+ablation:
+  experiments:
+    - name: "full_graphguard"
+      description: "Full GraphGuard with AGC and graph context"
+      use_agc: true
+      use_graph_context: true
+      use_adaptive_weights: true
+
+    - name: "no_agc"
+      description: "GraphGuard without AGC (static graph)"
+      use_agc: false
+      use_graph_context: true
+      use_adaptive_weights: false
+
+    - name: "no_graph_context"
+      description: "GraphGuard without graph context (edge features only)"
+      use_agc: false
+      use_graph_context: false
+      use_adaptive_weights: false
+
+    - name: "no_adaptive_weights"
+      description: "GraphGuard without adaptive edge weighting"
+      use_agc: true
+      use_graph_context: true
+      use_adaptive_weights: false
+
+    - name: "no_graphsage"
+      description: "Direct Node+Edge MLP without GraphSAGE message passing"
+      use_agc: false
+      use_graph_context: true
+      use_adaptive_weights: false

@@ -1,0 +1,4 @@
+Model,Accuracy,Precision (Macro),Recall (Macro),F1 (Macro),F1 (Weighted),FPR (Macro),Samples
+GraphGuard,1.0,1.0,1.0,1.0,1.0,0.0,15000
+Random Forest,1.0,1.0,1.0,1.0,1.0,0.0,15000
+XGBoost,1.0,1.0,1.0,1.0,1.0,0.0,15000

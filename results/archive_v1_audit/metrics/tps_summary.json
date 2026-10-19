@@ -1,0 +1,68 @@
+{
+  "total_nodes": 4651,
+  "critical_nodes": 1,
+  "high_nodes": 4,
+  "medium_nodes": 816,
+  "low_nodes": 3830,
+  "avg_tps": 0.0936,
+  "max_tps": 1.0,
+  "top_10_nodes": [
+    {
+      "ip": "172.16.0.1",
+      "tps": 1.0,
+      "threat_level": "CRITICAL"
+    },
+    {
+      "ip": "23.21.110.0",
+      "tps": 0.6306,
+      "threat_level": "HIGH"
+    },
+    {
+      "ip": "151.101.65.69",
+      "tps": 0.6192,
+      "threat_level": "HIGH"
+    },
+    {
+      "ip": "35.166.101.186",
+      "tps": 0.5848,
+      "threat_level": "HIGH"
+    },
+    {
+      "ip": "151.101.1.69",
+      "tps": 0.517,
+      "threat_level": "HIGH"
+    },
+    {
+      "ip": "65.52.108.232",
+      "tps": 0.4815,
+      "threat_level": "MEDIUM"
+    },
+    {
+      "ip": "192.243.250.65",
+      "tps": 0.4357,
+      "threat_level": "MEDIUM"
+    },
+    {
+      "ip": "63.140.38.156",
+      "tps": 0.4357,
+      "threat_level": "MEDIUM"
+    },
+    {
+      "ip": "34.211.94.203",
+      "tps": 0.4325,
+      "threat_level": "MEDIUM"
+    },
+    {
+      "ip": "212.77.100.127",
+      "tps": 0.4292,
+      "threat_level": "MEDIUM"
+    }
+  ],
+  "formula_weights": {
+    "attack_probability": 0.35,
+    "suspicious_neighbor_ratio": 0.25,
+    "recent_attack_frequency": 0.2,
+    "degree_centrality": 0.1,
+    "graph_betweenness": 0.1
+  }
+}

@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.venv/
+env/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (too large for GitHub)
+data/raw/
+data/processed/
+GeneratedLabelledFlows.zip
+*.csv.gz
+
+# Trained models (too large)
+models/*.pt
+models/*.joblib
+
+# Large prediction files
+results/predictions/*.parquet
+results/archive_v1_audit/predictions/*.parquet
+results/graphs/flow_metadata.parquet
+results/archive_v1_audit/graphs/flow_metadata.parquet
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Logs
+results/logs/
+
+# Large dataset zips
+MachineLearningCSV.zip
+GeneratedLabelledFlows.zip

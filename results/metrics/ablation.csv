@@ -1,0 +1,6 @@
+experiment,description,accuracy,f1_macro,f1_weighted,precision_macro,recall_macro,fpr_macro
+full_graphguard,Full GraphGuard with AGC and graph context,0.9993,0.9562,0.9993,0.9278,0.9922,0.0002
+no_agc,GraphGuard without AGC (static graph),0.9992,0.9787,0.9992,0.9659,0.9922,0.0003
+no_graph_context,GraphGuard without graph context (edge features only),0.9751,0.7129,0.9851,0.6903,0.9834,0.0093
+no_adaptive_weights,GraphGuard without adaptive edge weighting,0.9992,0.9787,0.9992,0.9659,0.9922,0.0003
+no_graphsage,Direct Node+Edge MLP without GraphSAGE message passing,0.9996,0.978,0.9996,0.965,0.9923,0.0001

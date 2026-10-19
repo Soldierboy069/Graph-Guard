@@ -1,0 +1,18 @@
+{
+  "num_nodes": 4651,
+  "num_edges": 99996,
+  "avg_out_degree": 21.49989249623737,
+  "avg_in_degree": 21.49989249623737,
+  "max_out_degree": 20859,
+  "max_in_degree": 20707,
+  "avg_total_degree": 42.99978499247474,
+  "max_total_degree": 28900,
+  "benign_edges": 92075,
+  "attack_edges": 7921,
+  "attack_ratio": 0.0792,
+  "label_distribution": {
+    "BENIGN": 92075,
+    "FTP-Patator": 7921
+  },
+  "num_isolated_nodes": 0
+}

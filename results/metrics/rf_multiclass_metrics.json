@@ -1,0 +1,67 @@
+{
+  "model": "Random Forest (Multiclass)",
+  "accuracy": 0.9994,
+  "precision_macro": 0.9998,
+  "recall_macro": 0.9468,
+  "f1_macro": 0.9713,
+  "precision_weighted": 0.9994,
+  "recall_weighted": 0.9994,
+  "f1_weighted": 0.9994,
+  "fpr_macro": 0.0085,
+  "confusion_matrix": [
+    [
+      29052,
+      0,
+      0
+    ],
+    [
+      7,
+      629,
+      0
+    ],
+    [
+      11,
+      0,
+      63
+    ]
+  ],
+  "class_names": [
+    "BENIGN",
+    "FTP-Patator",
+    "SSH-Patator"
+  ],
+  "per_class_report": {
+    "BENIGN": {
+      "precision": 0.9993808049535604,
+      "recall": 1.0,
+      "f1-score": 0.9996903065964695,
+      "support": 29052.0
+    },
+    "FTP-Patator": {
+      "precision": 1.0,
+      "recall": 0.9889937106918238,
+      "f1-score": 0.9944664031620554,
+      "support": 636.0
+    },
+    "SSH-Patator": {
+      "precision": 1.0,
+      "recall": 0.8513513513513513,
+      "f1-score": 0.9197080291970803,
+      "support": 74.0
+    },
+    "accuracy": 0.9993952019353538,
+    "macro avg": {
+      "precision": 0.9997936016511867,
+      "recall": 0.946781687347725,
+      "f1-score": 0.9712882463185352,
+      "support": 29762.0
+    },
+    "weighted avg": {
+      "precision": 0.9993955764233196,
+      "recall": 0.9993952019353538,
+      "f1-score": 0.9993798069287105,
+      "support": 29762.0
+    }
+  },
+  "n_samples": 29762
+}

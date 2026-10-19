@@ -1,0 +1,4 @@
+Model,Accuracy,Precision (Macro),Recall (Macro),F1 (Macro),F1 (Weighted),FPR (Macro),Samples
+GraphGuard (Multiclass),0.9992,0.9659,0.9922,0.9787,0.9992,0.0003,29762
+Random Forest (Multiclass),0.9994,0.9998,0.9468,0.9713,0.9994,0.0085,29762
+XGBoost (Multiclass),0.9994,0.9998,0.9468,0.9713,0.9994,0.0085,29762

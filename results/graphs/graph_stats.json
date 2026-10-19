@@ -1,0 +1,26 @@
+{
+  "num_nodes": 5728,
+  "num_edges": 155544,
+  "avg_out_degree": 27.155027932960895,
+  "avg_in_degree": 27.155027932960895,
+  "max_out_degree": 20575,
+  "max_in_degree": 47200,
+  "avg_total_degree": 54.31005586592179,
+  "max_total_degree": 67775,
+  "benign_edges": 146184,
+  "attack_edges": 9360,
+  "attack_ratio": 0.0602,
+  "label_distribution": {
+    "BENIGN": 146184,
+    "FTP-Patator": 5134,
+    "SSH-Patator": 4226
+  },
+  "num_isolated_nodes": 1043,
+  "inductive_protocol": {
+    "G_train_edges": 155544,
+    "G_hist_edges": 184240,
+    "val_query_edges": 28696,
+    "test_query_edges": 29762,
+    "target_edge_exclusion": true
+  }
+}

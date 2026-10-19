@@ -1,0 +1,78 @@
+{
+  "flow_index": 638,
+  "Flow ID": "172.16.0.1-192.168.10.50-59382-21-6",
+  "Source IP": "172.16.0.1",
+  "Destination IP": "192.168.10.50",
+  "Protocol": 6,
+  "actual_label": "FTP-Patator",
+  "predicted_label": "FTP-Patator",
+  "confidence": 0.9996,
+  "threat_propagation_score": {
+    "source_ip": "172.16.0.1",
+    "tps": 1.0,
+    "threat_level": "CRITICAL"
+  },
+  "top_xai_features": [
+    {
+      "feature": "Fwd Packet Length Mean",
+      "shap_value": 0.10092628998216241,
+      "abs_shap": 0.10092628998216241,
+      "feature_value": -0.3595018690763204
+    },
+    {
+      "feature": "Max Packet Length",
+      "shap_value": 0.08703137331875041,
+      "abs_shap": 0.08703137331875041,
+      "feature_value": -0.461361872948509
+    },
+    {
+      "feature": "Average Packet Size",
+      "shap_value": 0.07185378189198673,
+      "abs_shap": 0.07185378189198673,
+      "feature_value": -0.5521477359157347
+    },
+    {
+      "feature": "Fwd PSH Flags",
+      "shap_value": 0.07054753443342633,
+      "abs_shap": 0.07054753443342633,
+      "feature_value": 3.857032142469819
+    },
+    {
+      "feature": "Packet Length Mean",
+      "shap_value": 0.06616302934940904,
+      "abs_shap": 0.06616302934940904,
+      "feature_value": -0.511115706050429
+    },
+    {
+      "feature": "Total Length of Fwd Packets",
+      "shap_value": 0.06425375866121613,
+      "abs_shap": 0.06425375866121613,
+      "feature_value": -0.1501798765731258
+    },
+    {
+      "feature": "SYN Flag Count",
+      "shap_value": 0.062229368151165546,
+      "abs_shap": 0.062229368151165546,
+      "feature_value": 3.857032142469819
+    },
+    {
+      "feature": "Packet Length Std",
+      "shap_value": 0.055184482275508345,
+      "abs_shap": 0.055184482275508345,
+      "feature_value": -0.4853249731950243
+    },
+    {
+      "feature": "Fwd Packet Length Max",
+      "shap_value": 0.049105407116003336,
+      "abs_shap": 0.049105407116003336,
+      "feature_value": -0.3412247087898526
+    },
+    {
+      "feature": "Avg Fwd Segment Size",
+      "shap_value": 0.046877962504513565,
+      "abs_shap": 0.046877962504513565,
+      "feature_value": -0.3595018690763204
+    }
+  ],
+  "flow_explanation_plot": "results/explanations/flow_0_shap.png"
+}
